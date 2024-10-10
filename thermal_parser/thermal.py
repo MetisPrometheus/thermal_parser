@@ -798,8 +798,7 @@ class Thermal:
             params = dirp_measurement_params_t()
             params_point = pointer(params)
             return_status = self._dirp_get_measurement_params(handle, params_point)
-            assert return_status == Thermal.DIRP_SUCCESS, f'dirp_get_measurement_params error {
-                filepath_image}:{return_status}'
+            assert return_status == Thermal.DIRP_SUCCESS, f'dirp_get_measurement_params error {filepath_image}:{return_status}'
 
             if isinstance(object_distance, (float, int)):
                 params.distance = object_distance
