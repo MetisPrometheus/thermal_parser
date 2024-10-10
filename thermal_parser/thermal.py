@@ -810,8 +810,7 @@ class Thermal:
                 params.reflection = reflected_apparent_temperature
 
             return_status = self._dirp_set_measurement_params(handle, params)
-            assert return_status == Thermal.DIRP_SUCCESS, f'dirp_set_measurement_params error {
-                filepath_image}:{return_status}'
+            assert return_status == Thermal.DIRP_SUCCESS, f'dirp_set_measurement_params error {filepath_image}:{return_status}'
 
         if self._dtype.__name__ == np.float32.__name__:
             data = np.zeros(image_width * image_height, dtype=np.float32)
