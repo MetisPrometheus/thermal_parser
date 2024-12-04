@@ -51,7 +51,10 @@ def get_default_filepaths() -> List[str]:
 
     # Compute the plugins folder path
     folder_plugin = os.path.join(parent_dir, 'plugins')
-    print(f"Computed folder_plugin: {folder_plugin}")
+    print(f"Test folder_plugin: {folder_plugin}")
+
+    folder_plugin = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'plugins')
+    print(f"Actual folder_plugin: {folder_plugin}")
 
     system = platform.system()
     print(f"Detected system: {system}")
