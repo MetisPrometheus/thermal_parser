@@ -447,6 +447,10 @@ class Thermal:
             self._filepath_exiftool,
         ) = get_default_filepaths()
 
+        print(self._filepath_dirp)
+        print(self._filepath_dirp_sub)
+        print(self._filepath_iirp)
+
         try:
             self._dll_dirp = CDLL(self._filepath_dirp)
             self._dll_dirp_sub = CDLL(self._filepath_dirp_sub)
