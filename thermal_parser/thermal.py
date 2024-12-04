@@ -454,11 +454,21 @@ class Thermal:
 
         try:
             self._dll_dirp = CDLL(self._filepath_dirp)
+            print("libdirp.so loaded successfully")
+        except OSError as e:
+            print(f"Failed to load {self._filepath_dirp}: {e}")
+
+        try:
             self._dll_dirp_sub = CDLL(self._filepath_dirp_sub)
+            print("libv_dirp.so loaded successfully")
+        except OSError as e:
+            print(f"Failed to load {self._filepath_dirp_sub}: {e}")
+
+        try:
             self._dll_iirp = CDLL(self._filepath_iirp)
-        except OSError:
-            print('Unable to load the system C library')
-            sys.exit()
+            print("libv_iirp.so loaded successfully")
+        except OSError as e:
+            print(f"Failed to load {self._filepath_iirp}: {e}")
 
         # NOTE: The following code is for dji_thermal_sdk_v1.0
         # # Register SDK for the application.
