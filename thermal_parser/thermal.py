@@ -450,6 +450,7 @@ class Thermal:
         print(self._filepath_dirp)
         print(self._filepath_dirp_sub)
         print(self._filepath_iirp)
+        print(self._filepath_exiftool)
 
         try:
             self._dll_dirp = CDLL(self._filepath_dirp)
