@@ -38,22 +38,59 @@ DIRP_VERBOSE_LEVEL_NUM = 3  # 3: Total number
 
 
 def get_default_filepaths() -> List[str]:
-    folder_plugin = "/thermal_parser/plugins"  # Adjusted to point to the root directory in the Docker container
+    # Print the __file__ variable to see the current file's path
+    print(f"__file__: {__file__}")
+
+    # Get the directory of the current file
+    current_dir = os.path.dirname(__file__)
+    print(f"Current directory: {current_dir}")
+
+    # Get the parent directory
+    parent_dir = os.path.dirname(current_dir)
+    print(f"Parent directory: {parent_dir}")
+
+    # Compute the plugins folder path
+    folder_plugin = os.path.join(parent_dir, 'plugins')
+    print(f"Computed folder_plugin: {folder_plugin}")
+
     system = platform.system()
+    print(f"Detected system: {system}")
+
     sdk = "dji_thermal_sdk_v1.4_20220929"
     architecture = "x64" if platform.architecture()[0] == "64bit" else "x86"
+    print(f"Detected architecture: {architecture}")
+
     extension = "so" if system == "Linux" else "dll"
+    print(f"File extension: {extension}")
+
+    # Determine the exiftool path
     exiftool = "exiftool" if system == "Linux" else f"{folder_plugin}/exiftool-12.35.exe"
+    print(f"Exiftool path: {exiftool}")
+
+    # List of files relative to the plugins folder
     files = [
         f'{sdk}/{system.lower()}/release_{architecture}/libdirp.{extension}',
         f'{sdk}/{system.lower()}/release_{architecture}/libv_dirp.{extension}',
         f'{sdk}/{system.lower()}/release_{architecture}/libv_iirp.{extension}',
     ]
-    print(files)
+    print(f"Files before joining with folder_plugin: {files}")
+
+    # Check if the platform is supported
     if system not in ("Windows", "Linux") or architecture not in ("x64", "x86"):
-        raise NotImplementedError(f'currently not supported for running on this platform: {system} {architecture}')
+        raise NotImplementedError(f'Currently not supported on this platform: {system} {architecture}')
     
-    return *[os.path.join(folder_plugin, v) for v in files], exiftool
+    # Compute the full paths to the files
+    filepaths = [os.path.join(folder_plugin, v) for v in files]
+    print(f"Full file paths:")
+    for path in filepaths:
+        print(path)
+
+    # Check if the files exist
+    for path in filepaths:
+        exists = os.path.exists(path)
+        print(f"File exists: {path}: {exists}")
+
+    return *filepaths, exiftool
 
 
 
@@ -469,6 +506,7 @@ class Thermal:
             print("libv_iirp.so loaded successfully")
         except OSError as e:
             print(f"Failed to load {self._filepath_iirp}: {e}")
+
 
         # NOTE: The following code is for dji_thermal_sdk_v1.0
         # # Register SDK for the application.
