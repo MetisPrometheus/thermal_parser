@@ -49,6 +49,7 @@ def get_default_filepaths() -> List[str]:
         f'{sdk}/{system.lower()}/release_{architecture}/libv_dirp.{extension}',
         f'{sdk}/{system.lower()}/release_{architecture}/libv_iirp.{extension}',
     ]
+    print(files)
     if system not in ("Windows", "Linux") or architecture not in ("x64", "x86"):
         raise NotImplementedError(f'currently not supported for running on this platform: {system} {architecture}')
     
