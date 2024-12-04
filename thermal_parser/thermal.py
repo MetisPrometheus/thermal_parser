@@ -40,7 +40,7 @@ DIRP_VERBOSE_LEVEL_NUM = 3  # 3: Total number
 def get_default_filepaths() -> List[str]:
     folder_plugin = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'plugins')
     system = platform.system()
-    sdk = "dji_thermal_sdk_v1.5_20240507"
+    sdk = "dji_thermal_sdk_v1.4_20220929"
     architecture = "x64" if platform.architecture()[0] == "64bit" else "x86"
     extension = "so" if system == "Linux" else "dll"
     exiftool = "exiftool" if system == "Linux" else f"{folder_plugin}/exiftool-12.35.exe"
