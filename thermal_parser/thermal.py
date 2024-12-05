@@ -49,12 +49,9 @@ def get_default_filepaths() -> List[str]:
     parent_dir = os.path.dirname(current_dir)
     print(f"Parent directory: {parent_dir}")
 
-    # Compute the plugins folder path
-    folder_plugin = os.path.join(parent_dir, 'plugins')
-    print(f"Test folder_plugin: {folder_plugin}")
-
+    # Compute plugins folder path
     folder_plugin = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'plugins')
-    print(f"Actual folder_plugin: {folder_plugin}")
+    print(f"Plugin directory: {folder_plugin}")
 
     system = platform.system()
     print(f"Detected system: {system}")
@@ -85,13 +82,15 @@ def get_default_filepaths() -> List[str]:
     # Compute the full paths to the files
     filepaths = [os.path.join(folder_plugin, v) for v in files]
     print(f"Full file paths:")
-    for path in filepaths:
-        print(path)
-
+    print(f"Path libdirp: {files[0]}")
+    print(f"Path libv_dirp: {files[1]}")
+    print(f"Path libv_iirp: {files[2]}")
+    print(f"Path exiftool: {exiftool}")
+    
     # Check if the files exist
     for path in filepaths:
         exists = os.path.exists(path)
-        print(f"File exists: {path}: {exists}")
+        print(f"File exists: {exists} - {path}:")
 
     return *filepaths, exiftool
 
@@ -487,11 +486,6 @@ class Thermal:
             self._filepath_exiftool,
         ) = get_default_filepaths()
 
-        print(self._filepath_dirp)
-        print(self._filepath_dirp_sub)
-        print(self._filepath_iirp)
-        print(self._filepath_exiftool)
-
         try:
             self._dll_dirp = CDLL(self._filepath_dirp)
             print("libdirp.so loaded successfully")
@@ -509,7 +503,6 @@ class Thermal:
             print("libv_iirp.so loaded successfully")
         except OSError as e:
             print(f"Failed to load {self._filepath_iirp}: {e}")
-
 
         # NOTE: The following code is for dji_thermal_sdk_v1.0
         # # Register SDK for the application.
